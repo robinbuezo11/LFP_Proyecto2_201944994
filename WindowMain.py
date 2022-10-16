@@ -128,7 +128,7 @@ class WindowMain(ttk.Frame):
             (errors,tokens) = self.__mfile.analyzeText(self.__entrytext.get(1.0,'end-1c'))
             self.__html = Html(errors=errors,tokens=tokens)
             if len(errors) == 0 and len(tokens) != 0:
-                self.__html.generateResultsHTML()
+                self.__html.generateResults()
                 self.__errorstable.delete(*self.__errorstable.get_children())
                 msgbx.showinfo('Archivo Analizado','El archivo se analizó correctamente, se ha generado la página web')
             elif len(tokens) == 0:
