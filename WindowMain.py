@@ -4,20 +4,20 @@ from tkinter import ttk
 from tkinter import messagebox as msgbx
 from ManagerFile import ManagerFile
 from Html import Html
+from WindowToken import WindowToken
 
-class WindowMain(ttk.Frame):
+class WindowMain(tk.Frame):
     def __init__(self, master, mfile=ManagerFile()) -> None:
         super().__init__(master)
         master.title('Proyecto 2')
         master.geometry('800x700')
-        master.config(background='sky blue')
         master.resizable(False,False)
         self.__mfile = mfile
         self.__html = Html()
 
         #----------------------------- Menu -----------------------------
 
-        self.__menu = tk.Menu()
+        self.__menu = tk.Menu(master)
 
         self.__menufile = tk.Menu(self.__menu, tearoff=False)
         self.__menu.add_cascade(menu=self.__menufile, label='Archivo')
@@ -49,10 +49,16 @@ class WindowMain(ttk.Frame):
 
         #----------------------------- Entry Text -----------------------------
 
-        self.__entrytext = tk.Text(master=master)
-        self.__entrytext.place(relwidth=1, height=525)
+        self.__entrytext = tk.Text(master)
+        self.__entrytext.place(x=10,y=10,width=773, height=515)
         self.__entrytext.bind('<KeyRelease>', self.__position)
         self.__entrytext.bind('<ButtonRelease>', self.__position)
+
+        #----------------------------- Scroll Text -----------------------------
+        
+        self.__scrolltext = tk.Scrollbar(master, command=self.__entrytext.yview)
+        self.__entrytext.config(yscrollcommand=self.__scrolltext.set)
+        self.__scrolltext.place(x=783, height=525)
 
         #----------------------------- Label Position-----------------------------
 
@@ -80,7 +86,13 @@ class WindowMain(ttk.Frame):
                 self.__errorstable.column(f'#{iter}', width=100 ,anchor='center')
                 self.__errorstable.heading(f'#{iter}', text=columns[iter-1])
             iter += 1
-        self.__errorstable.place(y=550,relwidth=1,relheight=0.2)
+        self.__errorstable.place(x=10,y=550,width=773,height=140)
+
+        #----------------------------- Scroll Errors -----------------------------
+
+        self.__scrollerrors = tk.Scrollbar(master, command=self.__errorstable.yview)
+        self.__errorstable.config(yscrollcommand=self.__scrollerrors.set)
+        self.__scrollerrors.place(x=783, y=550, height=140)
 
     def __position(self, event=None): 
         pos = self.__entrytext.index(tk.INSERT)
@@ -128,7 +140,7 @@ class WindowMain(ttk.Frame):
             (errors,tokens) = self.__mfile.analyzeText(self.__entrytext.get(1.0,'end-1c'))
             self.__html = Html(errors=errors,tokens=tokens)
             if len(errors) == 0 and len(tokens) != 0:
-                self.__html.generateResults()
+#                self.__html.generateResults()
                 self.__errorstable.delete(*self.__errorstable.get_children())
                 msgbx.showinfo('Archivo Analizado','El archivo se analizó correctamente, se ha generado la página web')
             elif len(tokens) == 0:
@@ -140,7 +152,10 @@ class WindowMain(ttk.Frame):
             msgbx.showerror('Error',e) 
 
     def __tokens(self):
-        msgbx.showinfo(message='Boton Tokens')
+        if len(self.__html.getTokens()) == 0:
+            msgbx.showinfo('Tokens','Aún no hay ningún token en la lista')
+        else:
+            tokens = WindowToken(self,self.__html.getTokens())
 
     def __usermanual(self):
         subprocess.Popen(["Documentación\Manual de Usuario.pdf"], shell=True)

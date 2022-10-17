@@ -4,6 +4,7 @@ class DFA:
         self.__text = text
         self.__status = 0
         self.__errornum = 1
+        self.__tokennum = 1
         self.__errors =[]
         self.__tokens =[]
         self.__row = 1
@@ -18,6 +19,7 @@ class DFA:
         self.__tokens =[]
         self.__row = 1
         self.__errornum = 1
+        self.__tokennum = 1
 
         for line in text:
             self.__status = 0
@@ -98,22 +100,26 @@ class DFA:
             self.__lexeme += char
             self.__status2()
         else:
-            self.__tokens.append(['Apertura',self.__lexeme])
+            self.__tokens.append([self.__tokennum,'Apertura',1,self.__lexeme])
+            self.__tokennum += 1
             self.__status0(char)
 
     def __status2(self):
-        self.__tokens.append(['Apertura',self.__lexeme])
+        self.__tokens.append([self.__tokennum,'Apertura',1,self.__lexeme])
+        self.__tokennum += 1
         self.__status = 0
 
     def __status3(self, char):
         if str.isalpha(char):
             self.__lexeme += char
         else:
-            self.__tokens.append(['Palabra',self.__lexeme])
+            self.__tokens.append([self.__tokennum,'Palabra',2,self.__lexeme])
+            self.__tokennum += 1
             self.__status0(char)
 
     def __status4(self, char):
-        self.__tokens.append(['Igual',self.__lexeme])
+        self.__tokens.append([self.__tokennum,'Igual',3,self.__lexeme])
+        self.__tokennum += 1
         self.__status0(char)
 
     def __status5(self, char):
@@ -123,7 +129,8 @@ class DFA:
             self.__lexeme += char
             self.__status = 11
         else:
-            self.__tokens.append(['Numero',self.__lexeme])
+            self.__tokens.append([self.__tokennum,'Numero',4,self.__lexeme])
+            self.__tokennum += 1
             self.__status0(char)
 
     def __status6(self, char):
@@ -137,19 +144,23 @@ class DFA:
             self.__status0(char)
 
     def __status7(self, char):
-        self.__tokens.append(['Coma',self.__lexeme])
+        self.__tokens.append([self.__tokennum,'Coma',5,self.__lexeme])
+        self.__tokennum += 1
         self.__status0(char)
 
     def __status8(self, char):
-        self.__tokens.append(['Punto',self.__lexeme])
+        self.__tokens.append([self.__tokennum,'Punto',6,self.__lexeme])
+        self.__tokennum += 1
         self.__status0(char)
 
     def __status9(self, char):
-        self.__tokens.append(['CorcheteA',self.__lexeme])
+        self.__tokens.append([self.__tokennum,'CorcheteA',7,self.__lexeme])
+        self.__tokennum += 1
         self.__status0(char)
 
     def __status10(self, char):
-        self.__tokens.append(['CorcheteC',self.__lexeme])
+        self.__tokens.append([self.__tokennum,'CorcheteC',8,self.__lexeme])
+        self.__tokennum += 1
         self.__status0(char)
 
     def __status11(self, char):
@@ -166,11 +177,13 @@ class DFA:
         if str.isdigit(char):
             self.__lexeme += char
         else:
-            self.__tokens.append(['Numero',self.__lexeme])
+            self.__tokens.append([self.__tokennum,'Numero',4,self.__lexeme])
+            self.__tokennum += 1
             self.__status0(char)   
 
     def __status13(self, char):
-        self.__tokens.append(['Cierre',self.__lexeme])
+        self.__tokens.append([self.__tokennum,'Cierre',9,self.__lexeme])
+        self.__tokennum += 1
         self.__status0(char)      
 
     def getText(self):
