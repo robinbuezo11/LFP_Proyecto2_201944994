@@ -144,7 +144,7 @@ class WindowMain(tk.Frame):
                 self.__errorstable.delete(*self.__errorstable.get_children())
                 msgbx.showinfo('Archivo Analizado','El archivo se analizó correctamente, se ha generado la página web')
             elif len(tokens) == 0:
-                msgbx.showinfo('Texto vacío', 'Debe ingresar el texto para poder generar la página web')
+                msgbx.showinfo('Tokens', 'No se encontró ningún Token')
             else:
                 self.__seterrorsvalues(errors)
                 msgbx.showerror('Error en Análisis','Se encontraron errores en el análisis, por favor revise')
