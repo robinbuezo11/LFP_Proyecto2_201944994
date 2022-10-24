@@ -12,11 +12,17 @@ class Html:
         return self.__tokens
 
     def generateResults(self):
+        self.__generateHTML()
+        self.__generateCSS()
 
-        titlecolor = titlesize = bodycolor = bodysize = descolor = dessize = ''
-        text = f'<!DOCTYPE html><html><body><div><font size={titlesize} color={titlecolor}>Generacion Archivo HTML</font></br>'
-        text += '</div></body></html>'
-        
-        file=open('./RESULTADOS_201944994.html','w',encoding='utf-8')
+    def __generateHTML(self):
+        text = f'<!DOCTYPE html><html><head><title>LFPA+ - Proyecto 2</title><link rel="stylesheet" href="/Resultados/style.css"/></head><body><h1>Prueba</h1></body></html>'
+        file=open('Resultados/index.html','w',encoding='utf-8')
+        file.write(text)
+        file.close()
+
+    def __generateCSS(self):
+        text = 'h1{'+'color: rgb(20, 75, 200);}'
+        file=open('Resultados/style.css','w',encoding='utf-8')
         file.write(text)
         file.close()
