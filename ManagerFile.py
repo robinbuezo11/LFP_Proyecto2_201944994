@@ -2,6 +2,7 @@ from tkinter import messagebox as msgbx
 from tkinter.filedialog import askopenfilename, asksaveasfile
 
 from DFA import DFA
+from PDA import PDA
 
 class ManagerFile:
     def __init__(self) -> None:
@@ -11,7 +12,7 @@ class ManagerFile:
     #----------------------- Functions ----------------------------
     def openFile(self):   #Metodo para leer el archivo
         try:
-            path = askopenfilename()
+            path = askopenfilename(title='Abrir',defaultextension='.gpw',filetypes=[('GPW','*.gpw'),('All Filles','*')])
             file = open(path,'r',encoding='utf-8')
             self.__path = path
             if file is not None:
@@ -37,7 +38,12 @@ class ManagerFile:
         #print(dfa.getErrors())
         #print('----------------------------------------------------')
         #print(dfa.getTokens())
-        return (dfa.getErrors(),dfa.getTokens())
+        if len(dfa.getTokens()) != 0:
+            pda=PDA(dfa.getErrors(),dfa.getTokens())
+            pda.analyze()
+            return (pda.getErrors(),pda.getTokens())
+        else:
+            return (dfa.getErrors(),dfa.getTokens())
 
     def save(self,data,saveas=False):
         try:

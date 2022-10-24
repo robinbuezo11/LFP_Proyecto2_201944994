@@ -17,12 +17,6 @@ class DFA:
 
         text = self.__deleteComments(text)
 
-        self.__errors =[]
-        self.__tokens =[]
-        self.__row = 1
-        self.__errornum = 1
-        self.__tokennum = 1
-
         for line in text:
             self.__status = 0
             self.__column = 1
@@ -136,7 +130,7 @@ class DFA:
             self.__status0(char)
 
     def __status4(self, char):
-        self.__tokens.append([self.__tokennum,'Apertura',1,self.__lexeme])
+        self.__tokens.append([self.__tokennum,'Apertura',1,self.__lexeme,self.__row, self.__column])
         self.__tokennum += 1
         self.__status0(char)
 
@@ -144,12 +138,21 @@ class DFA:
         if str.isalpha(char) or str.isdigit(char):
             self.__lexeme += char
         else:
-            self.__tokens.append([self.__tokennum,'ID',2,self.__lexeme])
+            if self.__lexeme == 'Controles':
+                self.__tokens.append([self.__tokennum,'Controles',11,self.__lexeme,self.__row, self.__column])
+            elif self.__lexeme in ['Contenedor','Boton','Clave','Etiqueta','Texto','Check','RadioBoton','AreaTexto']:
+                self.__tokens.append([self.__tokennum,'Control',12,self.__lexeme,self.__row, self.__column])
+            elif self.__lexeme == 'Propiedades':
+                self.__tokens.append([self.__tokennum,'Propiedades',13,self.__lexeme,self.__row, self.__column])
+            elif self.__lexeme == 'Colocacion':
+                self.__tokens.append([self.__tokennum,'Colocacion',14,self.__lexeme,self.__row, self.__column])
+            else:
+                self.__tokens.append([self.__tokennum,'ID',2,self.__lexeme,self.__row, self.__column])
             self.__tokennum += 1
             self.__status0(char)
 
     def __status6(self, char):
-        self.__tokens.append([self.__tokennum,'PuntoComa',3,self.__lexeme])
+        self.__tokens.append([self.__tokennum,'PuntoComa',3,self.__lexeme,self.__row, self.__column])
         self.__tokennum += 1
         self.__status0(char)
 
@@ -174,22 +177,22 @@ class DFA:
             self.__status0(char)
 
     def __status9(self, char):
-        self.__tokens.append([self.__tokennum,'Cierre',4,self.__lexeme])
+        self.__tokens.append([self.__tokennum,'Cierre',4,self.__lexeme,self.__row, self.__column])
         self.__tokennum += 1
         self.__status0(char)
 
     def __status10(self, char):
-        self.__tokens.append([self.__tokennum,'Punto',5,self.__lexeme])
+        self.__tokens.append([self.__tokennum,'Punto',5,self.__lexeme,self.__row, self.__column])
         self.__tokennum += 1
         self.__status0(char)
 
     def __status11(self, char):
-        self.__tokens.append([self.__tokennum,'ParentesisA',6,self.__lexeme])
+        self.__tokens.append([self.__tokennum,'ParentesisA',6,self.__lexeme,self.__row, self.__column])
         self.__tokennum += 1
         self.__status0(char)
 
     def __status12(self, char):
-        self.__tokens.append([self.__tokennum,'ParentesisC',7,self.__lexeme])
+        self.__tokens.append([self.__tokennum,'ParentesisC',7,self.__lexeme,self.__row, self.__column])
         self.__tokennum += 1
         self.__status0(char) 
 
@@ -200,7 +203,7 @@ class DFA:
             self.__lexeme += char
             self.__status = 14
         else:
-            self.__tokens.append([self.__tokennum,'Numero',8,self.__lexeme])
+            self.__tokens.append([self.__tokennum,'Numero',8,self.__lexeme,self.__row, self.__column])
             self.__status0(char)
 
     def __status14(self, char):
@@ -216,16 +219,16 @@ class DFA:
         if str.isdigit(char):
             self.__lexeme += char
         else:
-            self.__tokens.append([self.__tokennum,'Numero',8,self.__lexeme])
+            self.__tokens.append([self.__tokennum,'Numero',8,self.__lexeme,self.__row, self.__column])
             self.__status0(char)         
 
     def __status16(self, char):
-        self.__tokens.append([self.__tokennum,'Comilla',9,self.__lexeme])
+        self.__tokens.append([self.__tokennum,'Comilla',9,self.__lexeme,self.__row, self.__column])
         self.__tokennum += 1
         self.__status0(char)    
 
     def __status17(self, char):
-        self.__tokens.append([self.__tokennum,'Coma',10,self.__lexeme])
+        self.__tokens.append([self.__tokennum,'Coma',10,self.__lexeme,self.__row, self.__column])
         self.__tokennum += 1
         self.__status0(char)   
 
