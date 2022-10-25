@@ -16,7 +16,11 @@ class Html:
         self.__generateCSS()
 
     def __generateHTML(self):
-        text = f'<!DOCTYPE html><html><head><title>LFPA+ - Proyecto 2</title><link rel="stylesheet" href="/Resultados/style.css"/></head><body><h1>Prueba</h1></body></html>'
+
+        body = ''
+        components = []
+
+        text = f'<!DOCTYPE html><html><head><title>LFPA+ - Proyecto 2</title><link href="/Resultados/style.css" rel="stylesheet" type="text/css"/></head><body><h1>Prueba</h1></body></html>'
         file=open('Resultados/index.html','w',encoding='utf-8')
         file.write(text)
         file.close()
