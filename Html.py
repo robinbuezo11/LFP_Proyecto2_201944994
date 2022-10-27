@@ -43,7 +43,7 @@ class Html:
                     self.__components.append([token[2],token[1],self.__tokens[i+1][3]],None,None,None,None,None,None,None,None)
                 elif token[2] == 2 and self.__tokens[i+1][2] == 5 and self.__tokens[i+2][2] == 2 and self.__tokens[i+3][2] == 6:
                     if self.__tokens[i+2][3] == 'setColorLetra':
-                        component = self.__searchComponentById()
+                        component = self.__searchComponentById(token[3])
                         j=i+4
                         numlist = []
                         while self.__components[j][2] == 8:
@@ -51,8 +51,11 @@ class Html:
                             j+=2  
                         component[3] = numlist
                         self.__setComponentById(component[2],component)
-                    elif self.__tokens[1+2][3] == 'setTexto':
-                        pass
+                    elif self.__tokens[i+2][3] == 'setTexto':
+                        component = self.__searchComponentById(token[3])
+                        if self.__tokens[i+4][2] == 9 and self.__tokens[i+5][2] == 2:
+                            component[4] = self.__tokens[i+5][3]
+                            self.__setComponentById(component[2],component)
             except:
                 pass
 
