@@ -40,7 +40,7 @@ class Html:
         for token in self.__tokens:
             try:
                 if token[2] == 12 and self.__tokens[i+1][2] == 2 and self.__tokens[i+2][2] == 3:
-                    self.__components.append([token[2],token[1],self.__tokens[i+1][3]],None,None,None,None,None,None,None,None)
+                    self.__components.append([token[2],token[1],self.__tokens[i+1][3]],None,None,None,None,None,None,None,None,None,[])
                 elif token[2] == 2 and self.__tokens[i+1][2] == 5 and self.__tokens[i+2][2] == 2 and self.__tokens[i+3][2] == 6:
                     if self.__tokens[i+2][3] == 'setColorLetra':
                         component = self.__searchComponentById(token[3])
@@ -86,6 +86,31 @@ class Html:
                             if id is not None:
                                 component[8] = self.__tokens[i+4][3]
                         self.__setComponentById(component[2],component)
+                    elif self.__tokens[i+2][3] == 'setAncho':
+                        component = self.__searchComponentById(token[3])
+                        if self.__tokens[i+4][2] == 8:
+                            component[9] = self.__tokens[i+4][3]
+                        self.__setComponentById(component[2],component)
+                    elif self.__tokens[i+2][3] == 'setAlto':
+                        component = self.__searchComponentById(token[3])
+                        if self.__tokens[i+4][2] == 8:
+                            component[10] = self.__tokens[i+4][3]
+                        self.__setComponentById(component[2],component)
+                    elif self.__tokens[i+2][3] == 'setPosicion':
+                        component = self.__searchComponentById(token[3])
+                        j=i+4
+                        numlist = []
+                        while self.__components[j][2] == 8:
+                            numlist.append(self.__components[j][3])
+                            j+=2  
+                        component[11] = numlist
+                        self.__setComponentById(component[2],component)
+                    elif self.__tokens[i+2][3] == 'add':
+                        if token[3] != 'this':
+                            component = self.__searchComponentById(token[3])
+                            id = self.__searchComponentById(self.__tokens[i+4][3])
+                            if id is not None:
+                                component[12].append(self.__tokens[i+4][3])
             except:
                 pass
 
