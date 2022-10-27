@@ -56,6 +56,36 @@ class Html:
                         if self.__tokens[i+4][2] == 9 and self.__tokens[i+5][2] == 2:
                             component[4] = self.__tokens[i+5][3]
                             self.__setComponentById(component[2],component)
+                    elif self.__tokens[i+2][3] == 'setAlineacion':
+                        component = self.__searchComponentById(token[3])
+                        if self.__tokens[i+4][3] in ['Centro','Izquierdo','Derecho']:
+                            component[6] = self.__tokens[i+4][3]
+                        else:
+                            component[6] = 'Izquierdo'
+                        self.__setComponentById(component[2],component)
+                    elif self.__tokens[i+2][3] == 'setColorFondo':
+                        component = self.__searchComponentById(token[3])
+                        j=i+4
+                        numlist = []
+                        while self.__components[j][2] == 8:
+                            numlist.append(self.__components[j][3])
+                            j+=2  
+                        component[5] = numlist
+                        self.__setComponentById(component[2],component)
+                    elif self.__tokens[i+2][3] == 'setMarcada':
+                        component = self.__searchComponentById(token[3])
+                        if self.__tokens[i+4][3] == 'True':
+                            component[7] = self.__tokens[i+4][3]
+                        else:
+                            component[7] = 'False'
+                        self.__setComponentById(component[2],component)
+                    elif self.__tokens[i+2][3] == 'setGrupo':
+                        component = self.__searchComponentById(token[3])
+                        if self.__tokens[i+4][2] == 2:
+                            id = self.__searchComponentById(self.__tokens[i+4][3])
+                            if id is not None:
+                                component[8] = self.__tokens[i+4][3]
+                        self.__setComponentById(component[2],component)
             except:
                 pass
 
