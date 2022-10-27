@@ -88,6 +88,9 @@ class PDA:
                         stack.append(10)
                     else:
                         stack.pop()
+                else:
+                    self.__errors.append([self.__errornum,'Sintático',token[4],token[5],token[3],f'Error cerca de {token[3]}'])
+                    return
             if token[2] in [1,2,3,4,5,6,7,8,9,10,11,12,13,14]:
                 if stack[-1] == token[2]:
                     stack.pop()

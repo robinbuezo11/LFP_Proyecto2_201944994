@@ -11,7 +11,7 @@
     Contenedor ContBody; 
 Controles --> 
 
-<!--propiedades 
+<!--Propiedades 
 /* 
 Definicion de propiedades 
 */ 
@@ -71,7 +71,7 @@ Definicion de propiedades
     ContBody.setAlto(300); 
     ContBody.setColorFondo(64,224,208); 
     //#$fin de ContBody 
-propiedades --> 
+Propiedades --> 
 
 <!--Colocacion 
 /* 
