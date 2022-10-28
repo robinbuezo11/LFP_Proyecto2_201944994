@@ -48,12 +48,14 @@ class ManagerFile:
     def save(self,data,saveas=False):
         try:
             if saveas:
-                file = asksaveasfile(title='Guardar como',defaultextension='.txt',filetypes=[('Todos','*.*')],mode='w')
+                file = asksaveasfile(title='Guardar como',defaultextension='.txt',filetypes=[('Todos','*.*')],mode='w',)
+                self.__path = file.name
             else:
                 if self.__path:
                     file = open(self.__path,'w', encoding='utf-8')
                 else:
                     file = asksaveasfile(title='Guardar como',defaultextension='.txt',filetypes=[('Todos','*.*')],mode='w')
+                    self.__path = file.name
             if file is not None:
                 file.write(data)
                 file.close()

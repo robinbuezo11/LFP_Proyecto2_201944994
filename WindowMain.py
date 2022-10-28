@@ -138,7 +138,7 @@ class WindowMain(tk.Frame):
     def __generate(self):
         try:
             (errors,tokens) = self.__mfile.analyzeText(self.__entrytext.get(1.0,'end-1c'))
-            self.__html = Html(errors=errors,tokens=tokens)
+            self.__html = Html(self.__mfile.getPath(),errors,tokens)
             if len(errors) == 0 and len(tokens) != 0:
                 self.__html.generateResults()
                 self.__errorstable.delete(*self.__errorstable.get_children())

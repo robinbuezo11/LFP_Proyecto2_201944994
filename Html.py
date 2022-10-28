@@ -1,7 +1,9 @@
 import math
 
 class Html:
-    def __init__(self, errors=[], tokens=[]) -> None:
+    def __init__(self, path='', errors=[], tokens=[]) -> None:
+        self.__path = path.split('/')[-1]
+        self.__path = self.__path[:self.__path.find('.')]
         self.__errors = errors
         self.__tokens = tokens
         self.__components = []
@@ -19,7 +21,7 @@ class Html:
     def __generateHTML(self):
 
         self.__generateComponents()
-        text = f'<html><head><title>LFPA+ - Proyecto 2</title><link href="/Resultados/style.css" rel="stylesheet" type="text/css"/></head><body>'
+        text = f'<html><head><title>LFPA+ - Proyecto 2</title><link href="{self.__path}.css" rel="stylesheet" type="text/css"/></head><body>'
         for component in self.__components:
             if component[13] == 'this':
                 if component[4] is None:
@@ -57,7 +59,7 @@ class Html:
                         text = self.__addComponentToHtml(component[12],text)
                     text += '</div>'
         text += '</body></html>'
-        file=open('Resultados/index.html','w',encoding='utf-8')
+        file=open(f'Resultados/{self.__path}.html','w',encoding='utf-8')
         file.write(text)
         file.close()
 
@@ -96,7 +98,7 @@ class Html:
                     text += f'#{component[2]}'+'{'+ f'position:absolute; top: {component[11][1]}px; left: {component[11][0]}px; width: {component[9]}; height: {component[10]}; background-color: rgb({component[5][0]},{component[5][1]},{component[5][2]}); font-size: 12px;'+'}'
                 else:
                     text += f'#{component[2]}'+'{'+ f'position:absolute; top: {component[11][1]}px; left: {component[11][0]}px; width: {component[9]}; height: {component[10]}; font-size: 12px;'+'}'
-        file=open('Resultados/style.css','w',encoding='utf-8')
+        file=open(f'Resultados/{self.__path}.css','w',encoding='utf-8')
         file.write(text)
         file.close()
 
