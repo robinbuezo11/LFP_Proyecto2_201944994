@@ -39,14 +39,14 @@ class Html:
                     text += f'<input type="submit" id="{component[2]}" value="{component[4]}" style="text-align: {component[6]}"/>'
                 elif component[14] == 'Check':
                     if component[7] == 'True':
-                        text += f'<input type="checkbox" id="{component[2]}" checked/>'
+                        text += f'<input type="checkbox" id="{component[2]}" checked/>{component[4]}'
                     else:
-                        text += f'<input type="checkbox" id="{component[2]}"/>'
+                        text += f'<input type="checkbox" id="{component[2]}"/>{component[4]}'
                 elif component[14] == 'RadioBoton':
                     if component[7] == 'True':
-                        text += f'<input type="radio" name="{component[8]}" id="{component[2]}" checked/>'
+                        text += f'<input type="radio" name="{component[8]}" id="{component[2]}" checked/>{component[4]}'
                     else:
-                        text += f'<input type="radio" name="{component[8]}" id="{component[2]}"/>'
+                        text += f'<input type="radio" name="{component[8]}" id="{component[2]}"/>{component[4]}'
                 elif component[14] == 'Texto':
                     text += f'<input type="text" id="{component[2]}" value="{component[4]}" style="text-align: {component[6]}"/>'
                 elif component[14] == 'AreaTexto':
@@ -84,9 +84,9 @@ class Html:
             elif component[14] == 'Boton':
                 text += f'#{component[2]}'+'{'+ f'position:absolute; top: {component[11][1]}px; left: {component[11][0]}px; width: 100; height: 25; font-size: 12px;'+'}'
             elif component[14] == 'Check':
-                text += f'#{component[2]}'+'{'+ f'position:absolute; top: {component[11][1]}px; left: {component[11][0]}px; width: 100; height: 25; font-size: 12px;'+'}'
+                text += f'#{component[2]}'+'{'+ f'font-size: 12px;'+'}'
             elif component[14] == 'RadioBoton':
-                text += f'#{component[2]}'+'{'+ f'position:absolute; top: {component[11][1]}px; left: {component[11][0]}px; width: 100; height: 25; font-size: 12px;'+'}'
+                text += f'#{component[2]}'+'{'+ f'font-size: 12px;'+'}'
             elif component[14] == 'Texto':
                 text += f'#{component[2]}'+'{'+ f'position:absolute; top: {component[11][1]}px; left: {component[11][0]}px; width: 100; height: 25; font-size: 12px;'+'}'
             elif component[14] == 'AreaTexto':
@@ -125,7 +125,13 @@ class Html:
                         component = self.__searchComponentById(token[3])
                         if component is not None:
                             if self.__tokens[i+4][2] == 9 and self.__tokens[i+5][2] == 2:
-                                component[4] = self.__tokens[i+5][3]
+                                j=i+5
+                                while self.__tokens[j][2] != 9:
+                                    if component[4] is None:
+                                        component[4] = self.__tokens[j][3]
+                                    else:
+                                        component[4] += f' {self.__tokens[j][3]}'
+                                    j+=1
                                 self.__setComponentById(component[2],component)
                     elif self.__tokens[i+2][3] == 'setAlineacion':
                         component = self.__searchComponentById(token[3])
@@ -236,14 +242,14 @@ class Html:
                 text += f'<input type="submit" id="{component[2]}" value="{component[4]}" style="text-align: {component[6]}"/>'
             elif component[14] == 'Check':
                 if component[7] == 'True':
-                    text += f'<input type="checkbox" id="{component[2]}" checked/>'
+                    text += f'<input type="checkbox" id="{component[2]}" checked/>{component[4]}'
                 else:
-                    text += f'<input type="checkbox" id="{component[2]}"/>'
+                    text += f'<input type="checkbox" id="{component[2]}"/>{component[4]}'
             elif component[14] == 'RadioBoton':
                 if component[7] == 'True':
-                    text += f'<input type="radio" name="{component[8]}" id="{component[2]}" checked/>'
+                    text += f'<input type="radio" name="{component[8]}" id="{component[2]}" checked/>{component[4]}'
                 else:
-                    text += f'<input type="radio" name="{component[8]}" id="{component[2]}"/>'
+                    text += f'<input type="radio" name="{component[8]}" id="{component[2]}"/>{component[4]}'
             elif component[14] == 'Texto':
                 text += f'<input type="text" id="{component[2]}" value="{component[4]}" style="text-align: {component[6]}"/>'
             elif component[14] == 'AreaTexto':

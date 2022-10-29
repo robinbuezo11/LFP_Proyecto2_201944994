@@ -65,14 +65,10 @@ class PDA:
                         stack.pop()
                         stack.append('S7')
                         stack.append(8)
-                    elif token[2] == 9 and self.__tokens[i][2] == 2:
+                    elif token[2] == 9:
                         stack.pop()
                         stack.append(9)
-                        stack.append(2)
-                        stack.append(9)
-                    elif token[2] == 9 and self.__tokens[i][2] == 9:
-                        stack.pop()
-                        stack.append(9)
+                        stack.append('S8')
                         stack.append(9)
                     elif token[2] == 2:
                         stack.pop()    
@@ -86,6 +82,17 @@ class PDA:
                         stack.append('S7')
                         stack.append(8)
                         stack.append(10)
+                    else:
+                        stack.pop()
+                elif stack[-1] == 'S8':
+                    if token[2] == 2:
+                        stack.pop()
+                        stack.append('S8')
+                        stack.append(2)
+                    elif token[2] == 8:
+                        stack.pop()
+                        stack.append('S8')
+                        stack.append(8)
                     else:
                         stack.pop()
                 else:
