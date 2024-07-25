@@ -1,2 +1,2 @@
 # LFP_Proyecto2_201944994
-Lenguajes Formales y de Programación - Proyecto 2
+Proyecto 2 del Laboratorio el curso de Lenguajes Formales y de Programación
